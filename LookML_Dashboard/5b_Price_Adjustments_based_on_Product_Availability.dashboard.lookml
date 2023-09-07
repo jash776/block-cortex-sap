@@ -1,5 +1,5 @@
 - dashboard: sap_order_to_cash_o2c_05_b_price_adjustments_based_on_product_availabilityperformance_tuning
-  title: "[SAP ORDER TO CASH] O2C 05_b: Price Adjustments based on Product Availability"
+  title: "Sales Price Adjustments based on Product Availability"
   layout: newspaper
   preferred_viewer: dashboards-next
   description: ''
@@ -65,7 +65,7 @@
       Region: countries_md.country_name_landx
       Sales Org: sales_organizations_md.sales_org_name_vtext
       Distribution Channel: distribution_channels_md.distribution_channel_name_vtext
-      Currency: currency_conversion_pricing.tcurr
+      Currency: currency_conversion_new.tcurr
       Year: sales_orders.creation_date_erdat_date
     row: 0
     col: 0
@@ -142,7 +142,7 @@
     model: cortex_sap_operational
     explore: sales_orders
     listens_to_filters: []
-    field: currency_conversion_pricing.tcurr
+    field: currency_conversion_new.tcurr
   - name: Region
     title: Region
     type: field_filter

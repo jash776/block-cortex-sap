@@ -4,13 +4,19 @@ view: deliveries {
   # to be used for all fields in this view.
   sql_table_name: `@{GCP_PROJECT}.@{REPORTING_DATASET}.Deliveries`
     ;;
-  # No primary key is defined for this view. In order to join this view in an Explore,
-  # define primary_key: yes on a dimension that has no repeated values.
 
   # Here's what a typical dimension looks like in LookML.
   # A dimension is a groupable field that can be used to filter query results.
   # This dimension will be called "Account Assignment Category Knttp" in Explore.
+  
   fields_hidden_by_default: yes
+
+  dimension: key {
+    type: string
+    primary_key: yes
+    sql: CONCAT(${client_mandt},${delivery_vbeln},${delivery_item_posnr});;
+  }
+  
   dimension: OnTimeDelivery {
     type: string
     sql: IF( ${date__proof_of_delivery___podat_date}<=${delivery_date_lfdat_date},
@@ -18,6 +24,7 @@ view: deliveries {
     'NotDeliveredOnTime') ;;
     hidden: no
   }
+
   dimension: InFullDelivery {
     type: string
     sql: IF(${sales_orders.cumulative_order_quantity_kwmeng}=${actual_quantity_delivered_in_sales_units_lfimg},
@@ -102,7 +109,7 @@ view: deliveries {
 
   measure: OnTimePercentage {
     type: number
-    sql: if(${count_of_deliveries}=0,0,${count_on_time_delivery}/${count_of_deliveries});;
+    sql: if(${count_of_deliveries}=0,0,${count_on_time_delivery}/NULLIF(${count_of_deliveries},0));;
     hidden: no
     link: {
       label: "Delivery Performance"
@@ -112,7 +119,7 @@ view: deliveries {
 
   measure: InFullPercentage {
     type: number
-    sql: if(${count_of_deliveries}=0,0,${count_in_full_delivery}/${count_of_deliveries})  ;;
+    sql: if(${count_of_deliveries}=0,0,${count_in_full_delivery}/NULLIF(${count_of_deliveries},0))  ;;
     hidden: no
     link: {
       label: "Delivery Performance"
@@ -122,7 +129,7 @@ view: deliveries {
 
   measure: OTIFPercentage {
     type: number
-    sql: if(${count_of_deliveries}=0,0,${count_otif}/${count_of_deliveries})  ;;
+    sql: if(${count_of_deliveries}=0,0,${count_otif}/NULLIF(${count_of_deliveries},0))  ;;
     hidden: no
     link: {
       label: "Delivery Performance"
@@ -132,7 +139,7 @@ view: deliveries {
 
   measure: LateDeliveryPercentage {
     type: number
-    sql: if(${count_of_deliveries}=0,0,${count_latedeliveries}/${count_of_deliveries})  ;;
+    sql: if(${count_of_deliveries}=0,0,${count_latedeliveries}/NULLIF(${count_of_deliveries},0))  ;;
     hidden: no
     link: {
       label: "Delivery Performance"
@@ -896,7 +903,7 @@ view: deliveries {
   dimension: delivery_vbeln {
     type: string
     sql: ${TABLE}.Delivery_VBELN ;;
-    primary_key: yes
+    #primary_key: yes
     hidden: no
   }
 

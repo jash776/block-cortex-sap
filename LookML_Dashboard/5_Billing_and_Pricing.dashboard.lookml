@@ -1,5 +1,5 @@
 - dashboard: sap_order_to_cash_o2c_05_billing_and_pricing
-  title: "[SAP ORDER TO CASH] O2C 05: Billing and Pricing"
+  title: "Sales Billing and Pricing"
   layout: newspaper
   preferred_viewer: dashboards-next
   description: ''
@@ -91,7 +91,7 @@
       Sales Org: sales_organizations_md.sales_org_name_vtext
       Distribution Channel: distribution_channels_md.distribution_channel_name_vtext
       Product: materials_md.material_text_maktx
-      Currency: currency_conversion_pricing.tcurr
+      Currency: currency_conversion_new.tcurr
     row: 4
     col: 0
     width: 24
@@ -160,7 +160,7 @@
       Sales Org: sales_organizations_md.sales_org_name_vtext
       Distribution Channel: distribution_channels_md.distribution_channel_name_vtext
       Product: materials_md.material_text_maktx
-      Currency: currency_conversion_pricing.tcurr
+      Currency: currency_conversion_new.tcurr
     row: 15
     col: 0
     width: 24
@@ -224,7 +224,7 @@
     model: cortex_sap_operational
     explore: sales_orders
     listens_to_filters: []
-    field: currency_conversion_pricing.tcurr
+    field: currency_conversion_new.tcurr
   - name: Region
     title: Region
     type: field_filter
